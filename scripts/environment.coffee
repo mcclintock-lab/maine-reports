@@ -8,20 +8,19 @@ for key, val of _partials
   partials[key.replace('node_modules/seasketch-reporting-api/', '')] = val
 
 
-class OverviewTab extends ReportTab
-  name: 'Overview'
-  className: 'overview'
-  template: templates.overview
+class EnvironmentTab extends ReportTab
+  name: 'Environment'
+  className: 'environment'
+  template: templates.environment
   dependencies:[ 
-    'SizeToolbox'
-    'ShellfishAndAquaculture'
+    'MaineHabitat'
   ]
 
   render: () ->
-    size = @recordSet('SizeToolbox', 'Size').float('Size')
-    aquaculture = @recordSet('ShellfishAndAquaculture', 'Aquaculture').toArray()
-    shellfish = @recordSet('ShellfishAndAquaculture', 'Shellfish').toArray()
 
+    habitats = @recordSet('MaineHabitat', 'MaineHabitats').toArray()
+    @roundData habitats
+    habitats = _.sortBy habitats, (row) -> row.Name
 
     # setup context object with data and render the template from it
     context =
@@ -29,19 +28,18 @@ class OverviewTab extends ReportTab
       sketchClass: @sketchClass.forTemplate()
       attributes: @model.getAttributes()
       admin: @project.isAdmin window.user
-      size: size
-      aquaculture: aquaculture
-      shellfish: shellfish
+
+      habitats: habitats
     
     @$el.html @template.render(context, templates)
     @enableLayerTogglers()
+    @enableTablePaging()
 
-
-  @roundData: (data) =>
+  roundData: (data) =>
     for d in data
       try
         d.AREA = parseFloat(d.AREA).toFixed(1)
       catch
         d.AREA = 0.0
 
-module.exports = OverviewTab
+module.exports = EnvironmentTab
