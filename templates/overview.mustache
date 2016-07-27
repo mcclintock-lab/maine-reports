@@ -1,4 +1,44 @@
 <div class="reportSection">
   <h4>Size</h4>
-  <p>The selected sketch is <b>{{size}}</b> square meters.
+  <p>The selected sketch is <b>{{size}}</b> square kilometers.
 </div>
+
+   <div class="reportSection tableContainer">
+    <h4>Aquaculture</h4>
+    <p>The selected sketch overlaps with the following aquaculture and shellfish areas:</p>
+    <span class="in-report-table-header">Aquaculture Areas</span>
+    <table style="margin-left:5px;width:97%" data-paging="25">
+      <thead>
+        <tr>
+          <th style="width:200px;">Aquaculture Site</th>
+          <th style="width:170px;">Species Present</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#aquaculture}}
+          <tr>
+            <td style="width:200px;">{{Name}}</td>
+            <td style="width:170px;">{{Info}}</td>
+          </tr>
+        {{/aquaculture}}
+      </tbody>
+    </table>
+    <span class="in-report-table-header">Shellfish Areas</span>
+    <table style="margin-left:5px;width:97%" data-paging="25">
+      <thead>
+        <tr>
+          <th style="width:200px;">Name</th>
+          <th style="width:170px;">Regulatory Classification</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#shellfish}}
+          <tr>
+            <td style="width:200px;">{{Name}}</td>
+            <td style="width:170px;">{{Info}}</td>
+          </tr>
+        {{/shellfish}}
+      </tbody>
+    </table>
+ </div>
+ </div>
